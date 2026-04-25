@@ -1,0 +1,57 @@
+#!/bin/bash
+
+cmd="$1"
+mod="/etc/modprobe.d/nvtoggle-blacklist.conf"
+udev="/etc/udev/rules.d/00-nvtoggle.rules"
+
+
+check_state () {
+    if [[ -e "$mod" ]] && [[ -e "$udev" ]]; then
+	echo "Discrete GPU is currently disabled"
+    else
+	echo "Discrete GPU is currently enabled"
+    fi
+}
+
+if [[ $(id -u) -ne 0 ]]; then
+    check_state
+    echo "Please run as root to make changes"
+    exit
+fi
+
+if [[ "$cmd" == "on" ]]; then
+    echo "Enabling discrete GPU"
+    echo
+    echo "Removing $mod"
+    rm -f "$mod"
+    echo "Removing $udev"
+    rm -f "$udev"
+elif [[ "$cmd" == "off" ]]; then
+    echo "Disabling discrete GPU"
+    echo
+    echo "Writing $mod"
+    cat > "$mod" <<EOF
+blacklist nouveau
+blacklist nvidia
+blacklist nvidia_drm
+blacklist nvidia_modeset
+blacklist nvidia_uvm
+EOF
+    echo "Writing $udev"
+    cat > "$udev" <<EOF
+ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c0330", ATTR{power/control}="auto", ATTR{remove}="1"
+
+ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c8000", ATTR{power/control}="auto", ATTR{remove}="1"
+
+ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x040300", ATTR{power/control}="auto", ATTR{remove}="1"
+
+ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x03[0-9]*", ATTR{power/control}="auto", ATTR{remove}="1"
+EOF
+else
+    check_state
+    echo "Please give an argument to make changes [on/off]"
+    exit 1
+fi
+
+echo
+echo "Done, please reboot for changes to take effect!"

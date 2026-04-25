@@ -1,0 +1,16 @@
+#+title: Utility scripts
+#+author: Xar0c
+
+Small collection of mainly Linux related utility scripts for my personal use.
+
+*** nvtoggle
+Simple script to enable/disable the discrete (nvidia) GPU of a laptop.
+Requires a reboot for changes to take effect.
+
+In practice this just half-automates the steps in [[https://wiki.archlinux.org/title/Hybrid_graphics#Using_udev_rules][this ArchWiki entry]] and extends them to also blacklist the non-noveau Nvidia drivers. The list of blacklistable drivers may need adjustment depending on exact setup.
+
+**** Usage
+Must be run as root (sudo) to make changes
+~nvtoggle~     check current status
+~nvtoggle on~  enable discrete GPU
+~nvtoggle off~ disable discrete GPU
