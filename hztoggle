@@ -6,10 +6,12 @@ cmd="$1"
 backend="cosmic" # kscreen / wlr / cosmic
 display="eDP-1"
 
+m1_name="1"
 m1_hertz="240"
 m1_width="2560"
 m1_height="1600"
 
+m2_name="2"
 m2_hertz="60"
 m2_width="$m1_width"
 m2_height="$m1_height"
@@ -21,10 +23,10 @@ toggle-cosmic () {
     fi
 
     case "$cmd" in
-	"1")
+	"$m1_name")
 	    cosmic-randr mode "$display" "$m1_width" "$m1_height" --refresh "$m1_hertz"
 	    ;;
-	"2")
+	"$m2_name")
 	    cosmic-randr mode "$display" "$m2_width" "$m2_height" --refresh "$m2_hertz"	
 	    ;;
 	*)
@@ -40,10 +42,10 @@ toggle-wlr () {
     fi
 
     case "$cmd" in
-	"1")
+	"$m1_name")
 	    wlr-randr --output "$display" --mode "${m1_width}x${m1_height}@${m1_hertz}"
 	    ;;
-	"2")
+	"$m2_name")
 	    wlr-randr --output "$display" --mode "${m2_width}x${m2_height}@${m2_hertz}"
 	    ;;
 	*)
@@ -59,10 +61,10 @@ toggle-kscreen () {
     fi
 
     case "$cmd" in
-	"1")
+	"$m1_name")
 	    kscreen-doctor "output.${display}.mode.${m1_width}x${m1_height}@${m1_hertz}"
 	    ;;
-	"2")
+	"$m2_name")
 	    kscreen-doctor "output.${display}.mode.${m2_width}x${m2_height}@${m2_hertz}"
 	    ;;
 	*)
@@ -74,10 +76,10 @@ toggle-kscreen () {
 
 info () {
     case "$cmd" in
-	"1")
+	"$m1_name")
 	    echo "Display $display ($backend) set to $m1_width px x $m1_height px @ $m1_hertz Hz"
 	    ;;
-	"2")
+	"$m2_name")
 	    echo "Display $display ($backend) set to $m2_width px x $m2_height px @ $m2_hertz Hz"
 	    ;;
     esac

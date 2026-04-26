@@ -28,17 +28,20 @@ Ensure that the way you define the refresh rate in the way your backend of choic
 Defined in the script itself. If more modes are needed they should be easy to add.
 
 | ~backend~   | ~kscreen~ / ~wlr~ / ~cosmic~ | Which backend to use.                    |
-| ~display~   | e.g ~eDP-1~              | Name of the display you want to control. |
-| ~mX_hertz~  | e.g ~60~                 | Display refresh rate for mode X          |
-| ~mX_width~  | e.g ~1920~               | Display width for mode X                 |
-| ~mX_height~ | e.g ~1080~               | Display height for mode X                |
+| ~display~   | e.g ~eDP-1~                  | Name of the display you want to control. |
+| ~mX_name~   | e.g ~1~                      | Name for mode X                          |
+| ~mX_hertz~  | e.g ~60~                     | Display refresh rate for mode X          |
+| ~mX_width~  | e.g ~1920~                   | Display width for mode X                 |
+| ~mX_height~ | e.g ~1080~                   | Display height for mode X                |
 
 *** Usage
 This can and should be run as non-root (without sudo)
 
-| ~hztoggle~   | get display info |
-| ~hztoggle 1~ | switch to mode 1 |
-| ~hztoggle 2~ | switch to mode 2 |
+| ~hztoggle~        | get display info              |
+| ~hztoggle 1~      | switch to mode 1              |
+| ~hztoggle 2~      | switch to mode 2              |
+| ~hztoggle <name>~ | switch to mode <name>         |
+|                   | (for custom or renamed modes) |
 
 KDE Plasma provides a convenient way to trigger this script automatically when switching between AC/battery/low-power modes. Unfortunately haven't figured out a clean way to do this outside of Plasma (udev would work, but running scripts as non-root gets a bit messy)
 
