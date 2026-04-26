@@ -18,4 +18,4 @@ Must be run as root (sudo) to make changes
 | ~nvtoggle off~ | disable discrete GPU |
 
 ----------------------------------------
-[[./LICENSE][License (MIT)]]
+[[./UNLICENSE][Unlicense]]
