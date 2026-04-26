@@ -1,0 +1,45 @@
+#!/bin/bash
+
+cmd="$1"
+display="eDP-1"
+backend="cosmic"
+
+m1_hertz="240"
+m1_width="2560"
+m1_height="1600"
+
+m2_hertz="60"
+m2_width="$m1_width"
+m2_height="$m1_height"
+
+toggle-cosmic () {
+    case "$cmd" in
+	"1")
+	    cosmic-randr mode "$display" "$m1_width" "$m1_height" --refresh "$m1_hertz"
+	    ;;
+	"2")
+	    cosmic-randr mode "$display" "$m2_width" "$m2_height" --refresh "$m2_hertz"	
+	    ;;
+    esac
+}
+
+info () {
+    case "$cmd" in
+	"1")
+	    echo "Display $display ($backend) set to $m1_width px x $m1_height px @ $m1_hertz Hz"
+	    ;;
+	"2")
+	    echo "Display $display ($backend) set to $m2_width px x $m2_height px @ $m2_hertz Hz"
+	    ;;
+    esac
+}
+
+case "$backend" in
+    "cosmic")
+	if ! [[ -x "$(command -v cosmic-randr)" ]]; then
+	    echo "cosmic-randr not found!"
+	    exit 1
+	fi
+	toggle-cosmic
+	info
+esac
