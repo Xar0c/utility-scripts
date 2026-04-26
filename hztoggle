@@ -1,8 +1,10 @@
 #!/bin/bash
 
 cmd="$1"
+
+# Configuration
+backend="cosmic" # kscreen / wlr / cosmic
 display="eDP-1"
-backend="cosmic"
 
 m1_hertz="240"
 m1_width="2560"
@@ -25,6 +27,9 @@ toggle-cosmic () {
 	"2")
 	    cosmic-randr mode "$display" "$m2_width" "$m2_height" --refresh "$m2_hertz"	
 	    ;;
+	*)
+	    cosmic-randr list
+	    ;;
     esac
 }
 
@@ -40,6 +45,9 @@ toggle-wlr () {
 	    ;;
 	"2")
 	    wlr-randr --output "$display" --mode "${m2_width}x${m2_height}@${m2_hertz}"
+	    ;;
+	*)
+	    wlr-randr
 	    ;;
     esac
 }
@@ -57,6 +65,9 @@ toggle-kscreen () {
 	"2")
 	    kscreen-doctor "output.${display}.mode.${m2_width}x${m2_height}@${m2_hertz}"
 	    ;;
+	*)
+	    kscreen-doctor -o
+	    ;;
     esac
 
 }
@@ -68,9 +79,6 @@ info () {
 	    ;;
 	"2")
 	    echo "Display $display ($backend) set to $m2_width px x $m2_height px @ $m2_hertz Hz"
-	    ;;
-	*)
-	    echo "Mode $cmd not recognized. Default modes are 1 and 2."
 	    ;;
     esac
 }
