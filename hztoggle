@@ -1,0 +1,102 @@
+#!/bin/bash
+
+cmd="$1"
+
+# Configuration
+backend="cosmic" # kscreen / wlr / cosmic
+display="eDP-1"
+
+m1_hertz="240"
+m1_width="2560"
+m1_height="1600"
+
+m2_hertz="60"
+m2_width="$m1_width"
+m2_height="$m1_height"
+
+toggle-cosmic () {
+    if ! [[ -x "$(command -v cosmic-randr)" ]]; then
+	echo "cosmic-randr not found!"
+	exit 1
+    fi
+
+    case "$cmd" in
+	"1")
+	    cosmic-randr mode "$display" "$m1_width" "$m1_height" --refresh "$m1_hertz"
+	    ;;
+	"2")
+	    cosmic-randr mode "$display" "$m2_width" "$m2_height" --refresh "$m2_hertz"	
+	    ;;
+	*)
+	    cosmic-randr list
+	    ;;
+    esac
+}
+
+toggle-wlr () {
+    if ! [[ -x "$(command -v wlr-randr)" ]]; then
+	echo "wlr-randr not found!"
+	exit 1
+    fi
+
+    case "$cmd" in
+	"1")
+	    wlr-randr --output "$display" --mode "${m1_width}x${m1_height}@${m1_hertz}"
+	    ;;
+	"2")
+	    wlr-randr --output "$display" --mode "${m2_width}x${m2_height}@${m2_hertz}"
+	    ;;
+	*)
+	    wlr-randr
+	    ;;
+    esac
+}
+
+toggle-kscreen () {
+    if ! [[ -x "$(command -v kscreen-doctor)" ]]; then
+	echo "kscreen-doctor not found!"
+	exit 1
+    fi
+
+    case "$cmd" in
+	"1")
+	    kscreen-doctor "output.${display}.mode.${m1_width}x${m1_height}@${m1_hertz}"
+	    ;;
+	"2")
+	    kscreen-doctor "output.${display}.mode.${m2_width}x${m2_height}@${m2_hertz}"
+	    ;;
+	*)
+	    kscreen-doctor -o
+	    ;;
+    esac
+
+}
+
+info () {
+    case "$cmd" in
+	"1")
+	    echo "Display $display ($backend) set to $m1_width px x $m1_height px @ $m1_hertz Hz"
+	    ;;
+	"2")
+	    echo "Display $display ($backend) set to $m2_width px x $m2_height px @ $m2_hertz Hz"
+	    ;;
+    esac
+}
+
+case "$backend" in
+    "cosmic")
+	toggle-cosmic
+	info
+	;;
+    "wlr")
+	toggle-wlr
+	info
+	;;
+    "kscreen")
+	toggle-kscreen
+	info
+	;;
+    *)
+	echo "Unrecognized backend $backend. Please use cosmic, wlr or kscreen."
+	;;
+esac

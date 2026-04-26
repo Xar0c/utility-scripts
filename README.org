@@ -17,5 +17,28 @@ Must be run as root (sudo) to make changes
 | ~nvtoggle on~  | enable discrete GPU  |
 | ~nvtoggle off~ | disable discrete GPU |
 
+** [[file:hztoggle][hztoggle]]
+Script to easily change between two or more modes for a display. Requires a compatible backend (~kscreen-doctor~, ~wlr-randr~ or ~cosmic-randr~).
+
+Modes are defined in the script itself, m1_* variables define mode 1 and m2_* mode 2. Make sure to set the display and backend according to your setup.
+
+Ensure that the way you define the refresh rate in the way your backend of choice expects it. ~kscreen-doctor~ for instance won't accept decimals, while ~wlr-randr~ requires them.
+
+*** Configuration
+Defined in the script itself. If more modes are needed they should be easy to add.
+
+| ~backend~   | ~kscreen~ / ~wlr~ / ~cosmic~ | Which backend to use.                    |
+| ~display~   | e.g ~eDP-1~              | Name of the display you want to control. |
+| ~mX_hertz~  | e.g ~60~                 | Display refresh rate for mode X          |
+| ~mX_width~  | e.g ~1920~               | Display width for mode X                 |
+| ~mX_height~ | e.g ~1080~               | Display height for mode X                |
+
+*** Usage
+This can and should be run as non-root (without sudo)
+
+| ~hztoggle~   | get display info |
+| ~hztoggle 1~ | switch to mode 1 |
+| ~hztoggle 2~ | switch to mode 2 |
+
 ----------------------------------------
 [[./UNLICENSE][Unlicense]]
