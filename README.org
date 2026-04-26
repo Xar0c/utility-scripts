@@ -18,7 +18,7 @@ Must be run as root (sudo) to make changes
 | ~nvtoggle off~ | disable discrete GPU |
 
 ** [[file:hztoggle][hztoggle]]
-Script to easily change between two or more modes for a display. Requires a compatible backend (~kscreen-doctor~, ~wlr-randr~ or ~cosmic-randr~).
+Script to easily switch between two or more modes for a display. Requires a compatible backend (~kscreen-doctor~, ~wlr-randr~ or ~cosmic-randr~).
 
 Modes are defined in the script itself, m1_* variables define mode 1 and m2_* mode 2. Make sure to set the display and backend according to your setup.
 
@@ -39,6 +39,8 @@ This can and should be run as non-root (without sudo)
 | ~hztoggle~   | get display info |
 | ~hztoggle 1~ | switch to mode 1 |
 | ~hztoggle 2~ | switch to mode 2 |
+
+KDE Plasma provides a convenient way to trigger this script automatically when switching between AC/battery/low-power modes. Unfortunately haven't figured out a clean way to do this outside of Plasma (udev would work, but running scripts as non-root gets a bit messy)
 
 ----------------------------------------
 [[./UNLICENSE][Unlicense]]
