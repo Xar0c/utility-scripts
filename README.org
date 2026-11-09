@@ -1,6 +1,11 @@
 #+title: Utility scripts
 #+author: Xar0c
 
+#+BEGIN_QUOTE
+[!NOTE]
+Migrated to [[https://codeberg.org/Xar0c/utility-scripts][codeberg]]
+#+END_QUOTE
+
 Small collection of mainly Linux related utility scripts for my personal use.
 
 ** [[file:nvtoggle][nvtoggle]]
